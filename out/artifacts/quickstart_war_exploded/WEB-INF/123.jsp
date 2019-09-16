@@ -1,0 +1,400 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: 郁杰原
+  Date: 2019/9/16
+  Time: 15:32
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 整体采用圣杯布局 纵向 */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        /* 顶部定高,且固定,自身采用flex横向布局 */
+        header {
+            position: fixed;
+            width: 100%;
+            height: 60px;
+            background: rgb(234, 234, 234);
+            color: #FFF;
+            display: flex;
+            /* 子元素垂直方向居中对齐 */
+            align-items: center;
+            justify-content:space-between;
+        }
+        .left {
+            /* 主轴正向flex */
+            display: flex;
+            flex-direction: row;
+            /* left盒子的左侧内边距 */
+            padding-left: 30px;
+        }
+        li {
+            /* 去掉圆点 */
+            list-style: none;
+        }
+        .left li {
+            /* 每个li元素之间的右边距 */
+            margin-right: 10px;
+        }
+        .right li{
+            /* 每个li元素之间的左边距 */
+            margin-left: 10px;
+        }
+        .right {
+            display: flex;
+            /* 主轴反向flex(本例为头像自右向左排列) */
+            flex-direction: row-reverse;
+            /* right盒子的右侧内边距 */
+            padding-right: 20px;
+
+        }
+
+        .right li img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* 中间内容采用CSS浮动来布局左右结构 */
+        .container {
+            width: 80%;
+            margin-top: 55px;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+
+        /* 左浮动,用border-box包裹边框 */
+        .sidebar{
+            width: 10%;
+            height: 670px;
+            background: #EEE;
+            float: left;
+            border: 5px solid #55D4EB;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        /* 右浮动,用border-box包裹边框 */
+        .content {
+            width: 90%;
+            height:flex;
+            background: #EEE;
+            float: right;
+            border: 5px solid #55D4EB;
+            box-sizing: border-box;
+        }
+        footer {
+            height: 120px;
+            background:rgb(255, 118, 13);
+            /* 清除浮动 */
+            clear: both;
+            display: flex;
+            /* 水平居中 */
+            justify-content: center;
+            /* 垂直居中 */
+            align-items: center;
+            color: #EEE;
+        }
+        .btn-up {
+            width: 50px;
+            height: 50px;
+            background: #FFF;
+            border: 1px solid #DDD;
+            border-radius: 2px;
+            color: #3F3F3F;
+            position: fixed;
+            bottom: 30px;
+            right: 15px;
+        }
+        .row{
+            width: 120px;
+            height: 120px;
+            flex-wrap:wrap ;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .row2{
+            width: 120px;
+            height: 20px;
+            flex-wrap:wrap ;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            margin-left: 10px;
+            margin-bottom: 15px;
+            padding: 10px 10px 10px 10px;
+            border-radius: 10px;
+            border: 1px solid #EEEEEE;
+        }
+        .box5{
+            width: 100px;
+            height: 20px;
+            margin-left: 10px;
+            margin-bottom: 15px;
+            padding: 10px 10px 10px 10px;
+            border-radius: 10px;
+            border: 1px solid #EEEEEE;
+        }
+        .box6{
+            width: 160px;
+            height: 100px;
+            margin-left: 10px;
+            margin-bottom: 15px;
+            padding: 10px 10px 10px 10px;
+            border-radius: 10px;
+            border: 1px solid #EEEEEE;
+        }
+        .box span{
+            font-size: 12px;
+        }
+        .img-circle{
+            border-radius: 10px;
+            width: 100%;
+            height: 100%; /* 图片自适应外层单元格大小 */
+        }/* 图片圆矩形效果 */
+
+        *,
+        :after,
+        :before{
+            box-sizing: border-box;
+        }
+
+        .row-1{
+            display: flex;
+            flex-wrap:wrap ;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        [class*='col-']{
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            /* background: #B0C4DE; */
+            min-height: 180px;
+            border: 1px solid #EEE;
+            margin-bottom: 15px;
+        }
+        /* 手机 */
+        @media only screen and (min-width : 320px) {
+            .col-xs-12{
+                flex: 0 0 100%;
+            }
+        }
+        /* 平板 */
+        @media only screen and (min-width : 768px) {
+            .col-md-6{
+                flex: 0 0 50%;
+            }
+        }
+        /* 中等屏幕设备 */
+        @media only screen and (min-width : 992px) {
+            .col-lg-4{
+                flex: 0 0 33.33%;
+            }
+        }
+        /* 宽屏设备 */
+        @media only screen and (min-width : 1200px) {
+            .col-xl-3{
+                flex: 0 0 25%;
+            }
+        }
+        .col-1 {
+            flex: 0 0 8.33%;
+        }
+        .col-2 {
+            flex: 0 0 16.66%;
+        }
+        .col-3 {
+            flex: 0 0 25%;
+        }
+        .col-4 {
+            flex: 0 0 33.3%;
+        }
+        .col-6 {
+            flex: 0 0 50%;
+        }
+        .col-12 {
+            flex: 0 0 100%;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="left">
+        <li>
+            <img src="8.jpg" >
+        </li>
+        <li>
+            <img src="7.jpg" >
+        </li>
+    </div>
+    <div class="right">
+
+        <li>
+            <img src="2.jpg" >
+        </li>
+        <li>
+            <i class="icon-home icon-large"></i><font color="#3F3F3F">登录</font>
+        </li>
+        <li>
+            <i class="icon-home icon-large"></i><font color="#3F3F3F">游戏人生</font>
+        </li>
+
+    </div>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+        <!-- 左边内容 -->
+        <div class="row-1">
+
+            <div class="box5">
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <span>游戏推荐</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row-1">
+
+            <div class="box">
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <img src="1.jpg" class="img-circle" >
+                    <i class="icon-home icon-large"></i>一人之下
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row-1">
+
+            <div class="box">
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <img src="3.jpg" class="img-circle" >
+                    <i class="icon-home icon-large"></i>王牌战士
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row-1">
+
+            <div class="box">
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <img src="4.jpg" class="img-circle" >
+                    <i class="icon-home icon-large"></i>火箭联盟
+                </div>
+            </div>
+        </div>
+
+        <div class="row-1">
+
+            <div class="box">
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <img src="5.jpg" class="img-circle" >
+                    <i class="icon-home icon-large"></i>艾兰岛
+                </div>
+            </div>
+        </div>
+
+        <div class="row-1">
+
+            <div class="box5">
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <span>下一组</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <!-- 右边内容 -->
+        <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+            <div class="row-1">
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+
+                    <div class="col-4">
+                        <img src="9.jpg" class="img-circle" >
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-4">
+                        <img src="10.jpg" class="img-circle" >
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-4">
+                        <img src="11.jpg" class="img-circle" >
+                    </div>
+                </div>
+
+            </div>
+            <div class="row-1">
+
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-6">
+                        <img src="12.jpg" class="img-circle" >
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-6">
+                        <img src="13.jpg" class="img-circle" >
+                    </div>
+                </div>
+            </div>
+            <div class="row-1">
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-3">
+                        <img src="14.jpg" class="img-circle" >
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-3">
+                        <img src="15.jpg" class="img-circle" >
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-3">
+                        <img src="16.jpg" class="img-circle" >
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3">
+                    <div class="col-3">
+                        <img src="17.jpg" class="img-circle" >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>腾讯公司版权所有</p>
+    </footer>
+</div>
+
+</div>
+
+<button type="button" class="btn-up"><i class="icon-angle-up icon-2x"></i></button>
+</body>
+</html>
